@@ -37,113 +37,98 @@
                 <a class="nav-link disabled" aria-disabled="true">Disabled</a>
               </li>-->
             </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
           </div>
         </div>
       </nav>
-      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="static\c1.jpg" class="d-block w-100" alt="..." height="500">
+      <center><iframe src="{{('Plot')}}" style="height:50vmin; width: 100vmin"></iframe></center>
+      <center><h2>Predicted Data</h2></center>
+      <hr>
+      <div class="container-fluid">
+        <table class="table">
+          <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Close Price </th>
+            </tr>
+          </thead>
+          <tbody>
+            {%for stk in data %}
+            <tr>
+              <th scope="row">{{stk[0]}}</th>
+              <td>{{stk[1]}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>     
+      <footer class="bg-dark text-white pt-5 pb-4">
+        <div class="container text-center text-md-left">
+          <div class="row text-center text-md-left">
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+              <h5 class="mb-4 font-weight-bold text-info">Risk Warning</h5>
+              <p>
+                <a class="text-white" style="text-decoration: none;">
+                Stock market predictions are uncertain and may result in financial losses. Hope's Stock Price Predictor is for information only and not investment advice. Users are responsible for their investment decisions and should consult financial experts. Past performance is not indicative of future results. Use at your own risk.
+                </a>
+              </p>
             </div>
-            <div class="carousel-item">
-              <img src="static\c2.jpg" class="d-block w-100" alt="..." height="500">
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+              <h5 class="mb-4 font-weight-bold text-info">Important Links</h5>
+              <p>
+                <a href="/" class="text-white" style="text-decoration: none;">Home</a>
+              </p>
+              <p>
+                <a href="/team" class="text-white" style="text-decoration: none;">Our Team</a>
+              </p>
+              <p>
+                <a href="/site" class="text-white" style="text-decoration: none;">About This Site</a>
+              </p>
+              <p>
+                <a href="/feedback" class="text-white" style="text-decoration: none;">Feedback</a>
+              </p>
             </div>
-            <div class="carousel-item">
-              <img src="static\c3.avif" class="d-block w-100" alt="..." height="500">
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+              <h5 class="mb-4 font-weight-bold text-info">Privacy Policy</h5>
+              <p>
+                <a class="text-white" style="text-decoration: none;">We respect your privacy. When using our predictor, we collect only your name and email address to keep a record of usage and gather feedback. This information is not shared with third parties. We store your data securely and only use it for internal purposes. By using our predictor, you consent to this data collection and usage.</a>
+              </p>
             </div>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-        <div class="container my-5">
-          <div class="position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5">
-            <!--<button type="button" class="position-absolute top-0 end-0 p-3 m-3 btn-close bg-secondary bg-opacity-10 rounded-pill" aria-label="Close"></button>-->
-            <svg class="bi mt-5 mb-3" width="48" height="48" aria-hidden="true"><use xlink:href="#check2-circle"/></svg>
-            <h1 class="text-body-emphasis">Placeholder jumbotron</h1>
-            <p class="col-lg-6 mx-auto mb-4">
-              This faded back jumbotron is useful for placeholder content. It's also a great way to add a bit of context to a page or section when no content is available and to encourage visitors to take a specific action.
-            </p>
-            <button class="btn btn-primary px-5 mb-5" type="button">
-              Call to action
-            </button>
-          </div>
-        </div>
-        <footer class="bg-dark text-white pt-5 pb-4">
-          <div class="container text-center text-md-left">
-            <div class="row text-center text-md-left">
-              <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                <h5 class="mb-4 font-weight-bold text-info">Hope</h5>
-                <p>gchgc ghchxdydcthv kjn jcknvjrvbahwrb ckj2be bc4hgubb jbshjbvhbuvniejirhfjke wbcjkbnrkjgtihg jsggvfhhslhjr gvkhfnkhbmhjtr jhitehvbhrbvjt nhthhjgrjkb vjtnbklrln klnjebvjkebn</p>
-              </div>
-              <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                <h5 class="mb-4 font-weight-bold text-info">Important Links</h5>
+            <hr class="mb-4">
+            <div class="row align-items-center">
+              <div class="col-md-7 col-lg-8">
                 <p>
-                  <a href="/" class="text-white" style="text-decoration: none;">Home</a>
-                </p>
-                <p>
-                  <a href="/team" class="text-white" style="text-decoration: none;">Our Team</a>
-                </p>
-                <p>
-                  <a href="/site" class="text-white" style="text-decoration: none;">About This Site</a>
-                </p>
-                <p>
-                  <a href="/feedback" class="text-white" style="text-decoration: none;">Feedbacks</a>
+                  Copyright &copy; 2025 All rights reserved by:
+                  <a href="https://webscte.co.in/" style="text-decoration: none;">
+                    <strong class="text-info"> Hope</strong>
+                  </a>
                 </p>
               </div>
-              <!--<div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-                <h5 class="mb-4 font-weight-bold text-info">Contact</h5>
-                <p>
-                  <i class="fas fa-envelope mr-3"></i><br> abc312967@gmail@gmail.com
-                </p>
-                <p>
-                  <i class="fas fa-phone mr-3"></i><br> 123456678911
-                </p>
-              </div>-->
-              <hr class="mb-4">
-              <div class="row align-items-center">
-                <div class="col-md-7 col-lg-8">
-                  <p>
-                    Copyright &copy; 2024 All rights reserved by:
-                    <a href="https://webscte.co.in/" style="text-decoration: none;">
-                      <strong class="text-info"> W.B.S.C.T.E.</strong>
-                    </a>
-                  </p>
-                </div>
-                <div class="col-md-5 col-lg-4">
-                  <div class="text-center text-md-right">
-                    <ul class="list-unstyled list-inline">
-                      <li class="list-inline-item">
-                        <a href="" class="btn-floating btn-sm text-white" style="font-size: 25px;">
-                          <i class="fab fa-facebook"></i>
-                        </a>
-                      </li>
-                      <li class="list-inline-item">
-                        <a href="https://www.instagram.com/apc_ray/" class="btn-floating btn-sm text-white" style="font-size: 25px;">
-                          <i class="fab fa-instagram"></i>
-                        </a>
-                      </li>
-                      <li class="list-inline-item">
-                        <a href="" class="btn-floating btn-sm text-white" style="font-size: 25px;">
-                          <i class="fab fa-linkedin"></i>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+              <div class="col-md-5 col-lg-4">
+                <div class="text-center text-md-right">
+                  <ul class="list-unstyled list-inline">
+                    <li class="list-inline-item">
+                      <a href="" class="btn-floating btn-sm text-white" style="font-size: 25px;">
+                        <i class="fab fa-facebook"></i>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="https://www.instagram.com/apc_ray/" class="btn-floating btn-sm text-white" style="font-size: 25px;">
+                        <i class="fab fa-instagram"></i>
+                      </a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="" class="btn-floating btn-sm text-white" style="font-size: 25px;">
+                        <i class="fab fa-linkedin"></i>
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-        </footer>
+        </div>
+      </footer>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js" integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
   </body>

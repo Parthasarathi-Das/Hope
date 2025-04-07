@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import hope
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] ="Partha"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -34,9 +35,97 @@ class Feedback(db.Model):
 def index():
     return render_template('index.html')
 
+@app.route('/predictor')
+def predictor():
+    return render_template('predictor.html')
+
+async def run_dl(stock, days):
+    pred_df = hope.predict_stock(stock, days)
+    return pred_df
+
+
+@app.route('/startpredict', methods =['POST','GET'])
+def startpredict():
+    stock = request.form['ticker']
+    email = request.form['email']
+    name = request.form['name']
+    days = request.form['days']
+    if email == '':
+        return render_template('predictor.html', no_email = 1)
+    elif name == '':
+        return render_template('predictor.html', no_name = 1)
+    elif stock == '':
+        return render_template('predictor.html', no_ticker = 1)
+    elif days == '':
+        return render_template('predictor.html', no_day = 1)
+    days = int(days)
+    valid = hope.ticker_validate(stock)
+    if valid:
+        # record = Visit(visitor_email = email, visitor_name = name, stock = stock, days = days)
+        # db.session.add(record)
+        # db.session.commit()
+        data = [stock, days, email, name, stock, days]
+        session["input_data"] = data
+        return render_template('wait.html')
+    else:
+        return render_template("predictor.html", notfound = 1)
+
+@app.route('/run_dl', methods =['POST','GET'])
+async def run_ml_method():
+    data = session.get('input_data')
+    pred_df = await run_dl(data[0], data[1])
+    record =  Visit(visitor_email = data[2], visitor_name = data[3], stock = data[4], days = data[5])
+    db.session.add(record)
+    db.session.commit()
+    # prediction_dict = pred_df.to_dict(orient='records')
+    return render_template("dashboard.html", data = pred_df.values)
+
+@app.route('/Plot')
+def plot():
+    return render_template('plot.html')
+
 @app.route('/feedback')
 def feedback():
     return render_template('feedback.html')
+
+@app.route('/savefeedback',methods =["POST","GET"])
+def savefeedback():
+    name = request.form["name"]
+    email = request.form["email"]
+    desc = request.form["desc"]
+    rate = request.form["rate"]
+    if email == '':
+        return render_template('feedback.html', no_email = 1)
+    elif name == '':
+        return render_template('feedback.html', no_name = 1)
+    elif desc == '':
+        return render_template('feedback.html', no_desc = 1)
+    elif rate == '':
+        return render_template('feedback.html', no_rate = 1)
+    rate = int(rate)
+    visitor = Visit.query.filter_by(visitor_email = email).all()
+    print(visitor)
+    if visitor == []:
+        return render_template('feedback.html', invalid_feedback = 1)
+    record = Feedback(user_name = name, user_email = email, desc = desc, rate = rate)
+    db.session.add(record)
+    db.session.commit()
+    return render_template('feedback.html', success =1)
+
+@app.route('/admin')
+def admin():
+    return render_template('admin.html',authorized =0)
+
+@app.route('/verify',methods =['POST','GET'])
+def verify():
+    email = request.form["email"]
+    password = request.form["password"]
+    if (email == mymail and password == pw):
+        visits = Visit.query.all()
+        feedbacks = Feedback.query.all()
+        return render_template('admin.html', authorized =1, visit = visits, feedback = feedbacks)
+    else:
+        return render_template('admin.html',authorized =0, intruder = 1)
 
 @app.route('/site')
 def site():
@@ -46,8 +135,6 @@ def site():
 def team():
     return render_template('team.html')
 
-@app.route('/predictor')
-def predictor():
-    return render_template('predictor.html')
+
 if __name__ == "__main__":
     app.run(debug=True, port= 8000)

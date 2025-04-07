@@ -61,7 +61,7 @@ def predict_stock(ticker_name, days):
         last_100 = np.append(last_100[:,1:,:], next_day_pred.reshape(1,1,-1), axis = 1)
 
     start_date = datetime.date.today()
-    dates = [(start_date + datetime.timedelta(days=i)).strftime("%d-%m-%Y") for i in range(30)]
+    dates = [(start_date + datetime.timedelta(days=i)).strftime("%d-%m-%Y") for i in range(days)]
 
     p = figure(title=f"{ticker_name} Stock Prediction for {days} days",
             height=500, width=1000,
@@ -79,11 +79,12 @@ def predict_stock(ticker_name, days):
     output_file("templates\\plot.html")
     save(p)
     start_date = datetime.date.today()
-    dates = [(start_date + datetime.timedelta(days=i)).strftime("%d %B, %Y") for i in range(30)]
+    dates = [(start_date + datetime.timedelta(days=i)).strftime("%d %B, %Y") for i in range(days)]
+    print("Dates  ",len(dates))
     values = [array[0][0] for array in future_predictions]
-
-    df = pd.DataFrame({
+    print("Values  ",len(values))
+    prediction_df = pd.DataFrame({
         'Date': dates,
-        'Prediction': values
+        'Predicted Close Price': values
     })
-    return df
+    return prediction_df
