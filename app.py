@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import hope
+import os
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] ="Partha"
@@ -137,4 +138,4 @@ def team():
 
 
 if __name__ == "__main__":
-    app.run(debug=False, port= 8000)
+    app.run(debug=False, host="0.0.0.0", port= int(os.environ.get("PORT",5000)))
