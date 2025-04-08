@@ -2,7 +2,6 @@ bokeh==3.4.1
 Flask==3.1.0
 flask_sqlalchemy==3.1.1
 gunicorn==23.0.0
-keras==3.9.0
 numpy==2.2.4
 pandas==2.2.3
 scikit_learn==1.4.2
