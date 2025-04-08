@@ -94,10 +94,10 @@ def savefeedback():
     email = request.form["email"]
     desc = request.form["desc"]
     rate = request.form["rate"]
-    if email == '':
-        return render_template('feedback.html', no_email = 1)
-    elif name == '':
+    if name == '':
         return render_template('feedback.html', no_name = 1)
+    elif email == '':
+        return render_template('feedback.html', no_email = 1)
     elif desc == '':
         return render_template('feedback.html', no_desc = 1)
     elif rate == '':
