@@ -34,7 +34,7 @@ def prepare_data(scaled_data, base_days):
 
 def predict_stock(ticker_name, days):
     end = datetime.datetime.now()
-    start = datetime.datetime.now() - datetime.timedelta(days=1*365)
+    start = datetime.datetime.now() - datetime.timedelta(days=5*365)
     stockdf = yf.download(ticker_name, start, end)
     stockdf = stockdf[["Close"]]
     #Scaling the data
