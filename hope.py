@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 from bokeh.models import DatetimeTickFormatter
 from bokeh.plotting import figure, output_file, save
-from tensorflow.python.keras import Sequential
-from tensorflow.python.keras.layers import LSTM, Dense
+from keras.api import Sequential
+from keras.api.layers import LSTM, Dense
 from sklearn.preprocessing import MinMaxScaler
 import datetime 
 
