@@ -1,8 +1,9 @@
-bokeh==3.4.1
-Flask==3.1.0
-flask_sqlalchemy==3.1.1
-keras==3.9.0
-numpy==2.2.5
-pandas==2.2.3
-scikit_learn==1.4.2
-yfinance==0.2.54
+bokeh
+Flask[async]
+flask_sqlalchemy
+keras
+numpy
+pandas
+scikit_learn
+yfinance
+tensorflow
