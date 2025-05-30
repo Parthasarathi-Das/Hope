@@ -1,4 +1,3 @@
-'''Deep Learning Model'''
 import yfinance as yf
 import numpy as np
 import pandas as pd
@@ -13,8 +12,10 @@ def ticker_validate(ticker):
     try:
         data = yf.Ticker(ticker)
         info = data.info
+        print(info)
         return True
     except Exception as e:
+        print(e)
         return False
 
 def prepare_data(scaled_data, base_days):
