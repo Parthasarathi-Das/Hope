@@ -63,12 +63,9 @@ def startpredict():
     days = int(days)
     valid = hope.ticker_validate(stock)
     if valid:
-        # record = Visit(visitor_email = email, visitor_name = name, stock = stock, days = days)
-        # db.session.add(record)
-        # db.session.commit()
         data = [stock, days, email, name, stock, days]
         session["input_data"] = data
-        return render_template('wait.html', notfound = 0)
+        return render_template('wait.html')
     else:
         return render_template("predictor.html", notfound = 1)
 
