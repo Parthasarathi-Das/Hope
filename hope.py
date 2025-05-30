@@ -1,3 +1,4 @@
+'''Deep Learning Model'''
 import yfinance as yf
 import numpy as np
 import pandas as pd
@@ -88,3 +89,4 @@ def predict_stock(ticker_name, days):
         'Predicted Close Price': values
     })
     return prediction_df
+
