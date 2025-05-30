@@ -13,7 +13,7 @@ def ticker_validate(ticker):
     try:
         data = yf.Ticker(ticker)
         info = data.info
-        return 'shortName' in info
+        return ('shortName' in info)
     except Exception:
         return False
 
@@ -89,4 +89,3 @@ def predict_stock(ticker_name, days):
         'Predicted Close Price': values
     })
     return prediction_df
-

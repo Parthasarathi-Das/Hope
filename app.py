@@ -68,7 +68,7 @@ def startpredict():
         # db.session.commit()
         data = [stock, days, email, name, stock, days]
         session["input_data"] = data
-        return render_template('wait.html')
+        return render_template('wait.html', notfound = 0)
     else:
         return render_template("predictor.html", notfound = 1)
 
