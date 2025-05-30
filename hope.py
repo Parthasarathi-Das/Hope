@@ -11,10 +11,10 @@ import datetime
 
 def ticker_validate(ticker):
     try:
-        data = yf.Ticker(ticker)
-        info = data.info
-        return ('shortName' in info)
-    except Exception:
+        info = yf.Ticker(ticker).info
+        print(info)
+        return True
+    except Exception as e:
         return False
 
 def prepare_data(scaled_data, base_days):
