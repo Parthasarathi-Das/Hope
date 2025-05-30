@@ -11,8 +11,8 @@ import datetime
 
 def ticker_validate(ticker):
     try:
-        info = yf.Ticker(ticker).info
-        print(info)
+        data = yf.Ticker(ticker)
+        info = data.info
         return True
     except Exception as e:
         return False
