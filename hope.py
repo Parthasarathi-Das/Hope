@@ -1,3 +1,4 @@
+'''Deep Learning Model'''
 import yfinance as yf
 import numpy as np
 import pandas as pd
@@ -7,17 +8,23 @@ from keras.api import Sequential
 from keras.api.layers import LSTM, Dense
 from sklearn.preprocessing import MinMaxScaler
 import datetime 
+import time
 
+# Method For Validating Stock Ticker
 def ticker_validate(ticker):
     try:
-        data = yf.Ticker(ticker)
-        info = data.info
-        print(info)
-        return True
+        data = yf.download(ticker, period="1d")
+        return not data.empty
     except Exception as e:
-        print(e)
-        return False
+        if "Too Many Requests" in str(e):
+            print(e)
+            time.sleep(60)
+            return ticker_validate(ticker)
+        else: 
+            print(e)
+            return False
 
+# Method For Data Preparation
 def prepare_data(scaled_data, base_days):
     x_data = []
     y_data = []
@@ -25,7 +32,7 @@ def prepare_data(scaled_data, base_days):
     for i in range(base_days, len(scaled_data)):
         x_data.append(scaled_data[i-base_days: i])
         y_data.append(scaled_data[i])
-        train_factor = 0.7 #Optimum
+        train_factor = 0.7 # Optimum
     x_train, x_test = x_data[:int(train_factor*len(x_data))], x_data[int(train_factor*len(x_data)):]
     y_train, y_test = y_data[:int(train_factor*len(y_data))], y_data[int(train_factor*len(y_data)):]
     x_train = np.array(x_train)
@@ -34,25 +41,25 @@ def prepare_data(scaled_data, base_days):
     y_test = np.array(y_test)
     return x_train, x_test, y_train, y_test
 
+# Method For Training and Prediction
 def predict_stock(ticker_name, days):
     end = datetime.datetime.now()
-    start = datetime.datetime.now() - datetime.timedelta(days=5*365)
+    start = datetime.datetime.now() - datetime.timedelta(days=5*365)    # Using 365 days old stock data
     stockdf = yf.download(ticker_name, start, end)
     stockdf = stockdf[["Close"]]
-    #Scaling the data
-    scaler = MinMaxScaler()
+    scaler = MinMaxScaler()                                             # Scaling the data
     scaled_stockdf = scaler.fit_transform(stockdf)
     base_days = 100
     x_train, x_test, y_train, y_test = prepare_data(scaled_stockdf, base_days)
 
-    model = Sequential([
+    model = Sequential([                                               # Creating Deep Neural Network
         LSTM(128, return_sequences=True, input_shape=(base_days, 1)),
         LSTM(64, return_sequences=False),
         Dense(25),
         Dense(1)
     ])
     model.compile(optimizer="adam", loss="mean_squared_error")
-    model.fit(x_train, y_train, batch_size= 5, epochs=10, validation_data=(x_test,y_test))
+    model.fit(x_train, y_train, batch_size= 5, epochs=10, validation_data=(x_test,y_test)) # Model Training
 
     last_100 = scaled_stockdf[-100:].reshape(1,-1,1)
     future_predictions = []
@@ -78,7 +85,7 @@ def predict_stock(ticker_name, days):
         months="%d-%m-%Y",
         years="%d-%m-%Y"
     )
-    output_file("templates\\plot.html")
+    output_file("templates\\plot.html")                                   # To store the Plot
     save(p)
     start_date = datetime.date.today()
     dates = [(start_date + datetime.timedelta(days=i)).strftime("%d %B, %Y") for i in range(days)]
